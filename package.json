@@ -1,0 +1,20 @@
+{
+  "name": "gnd-crawler",
+  "version": "0.0.1",
+  "description": "Gumballs & Dungeons game data crawler",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "XuHaoJun",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "bluebird-queue": "0.0.8",
+    "cheerio": "^0.22.0",
+    "encoding": "^0.1.12",
+    "node-opencc": "0.0.2",
+    "request": "^2.75.0",
+    "request-promise": "^4.1.1"
+  }
+}
