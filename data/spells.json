@@ -45,49 +45,49 @@
     "buff": ""
   },
   {
-    "id": 4041,
-    "type": "light",
-    "name": "祝福術",
-    "consumeMp": 5,
+    "id": 4011,
+    "type": "water",
+    "name": "治療術",
+    "consumeMp": 6,
     "tier": "1階魔法",
-    "description": "提升自身攻擊，且攻擊敵人不受閃避（持續3輪）",
-    "buff": "藥劑師岡布奧，賢者岡布奧，考古家岡布奧，魔法學徒"
+    "description": "恢復生命值（效果與魔力相關）",
+    "buff": "牧師岡布奧，白袍法師"
   },
   {
-    "id": 4042,
-    "type": "light",
-    "name": "聖光彈",
+    "id": 4012,
+    "type": "water",
+    "name": "寒冰護盾",
     "consumeMp": 9,
     "tier": "2階魔法",
-    "description": "對單個敵人造成傷害（對亡靈系敵人效果提升100%）",
-    "buff": "阿波羅岡布奧，光明仲裁官，祭司，光系大師，教皇"
+    "description": "護盾可吸收一定傷害（持續本層）",
+    "buff": "巫妖王岡布奧，神官，大主教"
   },
   {
-    "id": 4043,
-    "type": "light",
-    "name": "神恩術",
+    "id": 4013,
+    "type": "water",
+    "name": "冰錐術",
     "consumeMp": 11,
     "tier": "3階魔法",
-    "description": "恢復生命值，且清除詛咒狀態",
-    "buff": "神聖巨龍岡布奧，神龍岡布奧，光輝聖騎士，光輝神官"
+    "description": "對單個敵人造成傷害，且令其無法行動（持續2輪，BOSS持續1輪）",
+    "buff": "幽靈船長岡布奧，水系大師"
   },
   {
-    "id": 4044,
-    "type": "light",
-    "name": "天堂之拳",
+    "id": 4014,
+    "type": "water",
+    "name": "痊癒術",
     "consumeMp": 13,
     "tier": "4階魔法",
-    "description": "對距離2範圍內所有敵人造成傷害（對亡靈系敵人效果提升100%）",
-    "buff": "聖域鬥士岡布奧，教皇"
+    "description": "恢復大量生命值，且清除所有負面狀態",
+    "buff": "光輝神官"
   },
   {
-    "id": 4045,
-    "type": "light",
-    "name": "神聖重生",
+    "id": 4015,
+    "type": "water",
+    "name": "極光屏障",
     "consumeMp": 15,
     "tier": "5階魔法",
-    "description": "施放後，下次死亡將自動復活（復活時，恢復大量生命值）",
-    "buff": "創世神岡布奧，光輝神官"
+    "description": "屏障可吸收大量傷害（持續本層）",
+    "buff": "大主教"
   },
   {
     "id": 4021,
@@ -135,51 +135,6 @@
     "buff": "世界樹岡布奧，毀滅法師"
   },
   {
-    "id": 4011,
-    "type": "water",
-    "name": "治療術",
-    "consumeMp": 6,
-    "tier": "1階魔法",
-    "description": "恢復生命值（效果與魔力相關）",
-    "buff": "牧師岡布奧，白袍法師"
-  },
-  {
-    "id": 4012,
-    "type": "water",
-    "name": "寒冰護盾",
-    "consumeMp": 9,
-    "tier": "2階魔法",
-    "description": "護盾可吸收一定傷害（持續本層）",
-    "buff": "巫妖王岡布奧，神官，大主教"
-  },
-  {
-    "id": 4013,
-    "type": "water",
-    "name": "冰錐術",
-    "consumeMp": 11,
-    "tier": "3階魔法",
-    "description": "對單個敵人造成傷害，且令其無法行動（持續2輪，BOSS持續1輪）",
-    "buff": "幽靈船長岡布奧，水系大師"
-  },
-  {
-    "id": 4014,
-    "type": "water",
-    "name": "痊癒術",
-    "consumeMp": 13,
-    "tier": "4階魔法",
-    "description": "恢復大量生命值，且清除所有負面狀態",
-    "buff": "光輝神官"
-  },
-  {
-    "id": 4015,
-    "type": "water",
-    "name": "極光屏障",
-    "consumeMp": 15,
-    "tier": "5階魔法",
-    "description": "屏障可吸收大量傷害（持續本層）",
-    "buff": "大主教"
-  },
-  {
     "id": 4031,
     "type": "air",
     "name": "閃電術",
@@ -223,6 +178,51 @@
     "tier": "5階魔法",
     "description": "令所有敵人停止行動，且攻擊敵人不受反擊（持續8輪，BOSS持續3輪）",
     "buff": "奧丁神岡布奧，時之術士岡布奧，傳奇法師"
+  },
+  {
+    "id": 4041,
+    "type": "light",
+    "name": "祝福術",
+    "consumeMp": 5,
+    "tier": "1階魔法",
+    "description": "提升自身攻擊，且攻擊敵人不受閃避（持續3輪）",
+    "buff": "藥劑師岡布奧，賢者岡布奧，考古家岡布奧，魔法學徒"
+  },
+  {
+    "id": 4042,
+    "type": "light",
+    "name": "聖光彈",
+    "consumeMp": 9,
+    "tier": "2階魔法",
+    "description": "對單個敵人造成傷害（對亡靈系敵人效果提升100%）",
+    "buff": "阿波羅岡布奧，光明仲裁官，祭司，光系大師，教皇"
+  },
+  {
+    "id": 4043,
+    "type": "light",
+    "name": "神恩術",
+    "consumeMp": 11,
+    "tier": "3階魔法",
+    "description": "恢復生命值，且清除詛咒狀態",
+    "buff": "神聖巨龍岡布奧，神龍岡布奧，光輝聖騎士，光輝神官"
+  },
+  {
+    "id": 4044,
+    "type": "light",
+    "name": "天堂之拳",
+    "consumeMp": 13,
+    "tier": "4階魔法",
+    "description": "對距離2範圍內所有敵人造成傷害（對亡靈系敵人效果提升100%）",
+    "buff": "聖域鬥士岡布奧，教皇"
+  },
+  {
+    "id": 4045,
+    "type": "light",
+    "name": "神聖重生",
+    "consumeMp": 15,
+    "tier": "5階魔法",
+    "description": "施放後，下次死亡將自動復活（復活時，恢復大量生命值）",
+    "buff": "創世神岡布奧，光輝神官"
   },
   {
     "id": 4051,

@@ -1,11 +1,11 @@
+const Promise = require('bluebird')
 const _ = require('lodash')
 const request = require('request-promise')
 const encoding = require('encoding')
 const cheerio = require('cheerio')
-const fs = require('fs')
+const fs = Promise.promisifyAll(require('fs'))
 const opencc = require('node-opencc')
 const BlueBirdQueue = require('bluebird-queue')
-const Promise = require('bluebird')
 
 const prefixURL = 'http://rs.qcplay.com/html/slime-datum/cn'
 const path = {
@@ -131,6 +131,7 @@ function getSlimes() {
         medal,
         fullstat
       }
+      console.log(slime.id, slime.name)
       return slime
     }).catch(error => {
       console.log('!!!!!!!!!!!!!!', id, error)
@@ -144,7 +145,10 @@ function getSlimes() {
     queue.add(getSlimeTask.bind(null, i))
   }
   return (queue.start().then(result => {
-    fs.writeFileSync('./data/slimes.json', JSON.stringify(result, null, 2))
+    result.sort((a, b) => {
+      return a.id - b.id
+    })
+    return fs.writeFileAsync('./data/slimes.json', JSON.stringify(result, null, 2))
   }))
 }
 
@@ -233,6 +237,7 @@ function getPotions() {
         potion['name'] = name.substring(4)
         potion['tier'] = tier.substring(4)
         potion['effect'] = effect.substring(4)
+        console.log(potion.id, potion.name)
         potions.push(potion)
       })
     }))
@@ -241,11 +246,12 @@ function getPotions() {
   queue.add(getPotionsByTier.bind(null, 2))
   queue.add(getPotionsByTier.bind(null, 3))
   queue.add(getPotionsByTier.bind(null, 4))
-  queue
-    .start()
-    .then(() => {
-      fs.writeFileSync('./data/potions.json', JSON.stringify(potions, null, 2))
+  return (queue.start().then(() => {
+    potions.sort((a, b) => {
+      return a.id - b.id
     })
+    return fs.writeFileAsync('./data/potions.json', JSON.stringify(potions, null, 2))
+  }))
 }
 
 function getSpells() {
@@ -310,21 +316,30 @@ function getSpells() {
         spell['tier'] = tier.substring(4)
         spell['description'] = description.substring(4)
         spell['buff'] = buff.substring(4)
+        console.log(spell.id, spell.name)
         spells.push(spell)
       })
-      console.log(spells)
     }))
   }
   _.each(path.spells, (v, type) => {
     queue.add(getSpellsByType.bind(null, type))
   })
-  queue
+  return queue
     .start()
     .then(() => {
-      fs.writeFileSync('./data/spells.json', JSON.stringify(spells, null, 2))
+      spells.sort((a, b) => {
+        return a.id - b.id
+      })
+      return fs.writeFileAsync('./data/spells.json', JSON.stringify(spells, null, 2))
     })
 }
 
-// getSlimes().then(() => {   return getSlimesImage() }) getSlimesImage()
-// getPotions()
-getSpells()
+function getAll() {
+  return getSlimes()
+    .then(getSlimesImage)
+    .then(getPotions)
+    .then(getSpells)
+}
+
+// getSpells()
+getAll()
