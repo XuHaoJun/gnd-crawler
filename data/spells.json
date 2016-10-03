@@ -1,0 +1,47 @@
+[
+  {
+    "id": 4051,
+    "type": "dark",
+    "name": "詛咒術",
+    "consumeMp": "x6",
+    "tier": "1階魔法",
+    "description": "降低敵人攻擊（持續4輪，BOSS效果減半）",
+    "buff": "巫醫岡布奧"
+  },
+  {
+    "id": 4052,
+    "type": "dark",
+    "name": "死亡波紋",
+    "consumeMp": "x9",
+    "tier": "2階魔法",
+    "description": "對本層所有已顯形的敵人造成傷害（對亡靈系敵人無效）",
+    "buff": "墮天使岡布奧，黑暗龍岡布奧，世界樹岡布奧，黑暗仲裁官，咒術師，暗系大師，黑暗祭司"
+  },
+  {
+    "id": 4053,
+    "type": "dark",
+    "name": "吸能術",
+    "consumeMp": "x11",
+    "tier": "3階魔法",
+    "description": "攻擊附帶吸血效果（持續3輪，對無生命敵人無效）",
+    "buff": "吸血伯爵岡布奧"
+  },
+  {
+    "id": 4054,
+    "type": "dark",
+    "name": "變形術",
+    "consumeMp": "x13",
+    "tier": "4階魔法",
+    "description": "降低敵人攻擊及生命值，並消除一切特性（持續4輪，BOSS持續2輪）",
+    "buff": "海怪船長岡布奧"
+  },
+  {
+    "id": 4055,
+    "type": "dark",
+    "name": "內爆術",
+    "consumeMp": "x17",
+    "tier": "5階魔法",
+    "description": "對單體目標造成大量傷害（最強單體傷害）",
+    "buff": "黑暗龍岡布奧，黑暗祭司"
+  }
+]
