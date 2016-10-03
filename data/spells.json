@@ -1,9 +1,234 @@
 [
   {
+    "id": 4001,
+    "type": "earth",
+    "name": "石膚術",
+    "consumeMp": 7,
+    "tier": "1階魔法",
+    "description": "降低所受傷害（持續3輪）",
+    "buff": "魔法傀儡岡布奧"
+  },
+  {
+    "id": 4002,
+    "type": "earth",
+    "name": "地震術",
+    "consumeMp": 9,
+    "tier": "2階魔法",
+    "description": "立即翻開若干個石板",
+    "buff": "地刺術"
+  },
+  {
+    "id": 4003,
+    "type": "earth",
+    "name": "",
+    "consumeMp": null,
+    "tier": "對同列所有敵人造成傷害，且翻開整列石板",
+    "description": "美杜莎岡布奧，鎮龍騎士",
+    "buff": "超重力"
+  },
+  {
+    "id": 4004,
+    "type": "earth",
+    "name": "",
+    "consumeMp": null,
+    "tier": "對單體目標造成傷害，且令其無法反擊（持續3輪，BOSS持續1輪）",
+    "description": "海格力斯岡布奧，土系大師",
+    "buff": "大地之門"
+  },
+  {
+    "id": 4005,
+    "type": "earth",
+    "name": "",
+    "consumeMp": null,
+    "tier": "立即回退若干層迷宮（特殊層禁用）",
+    "description": "位面先知",
+    "buff": ""
+  },
+  {
+    "id": 4041,
+    "type": "light",
+    "name": "祝福術",
+    "consumeMp": 5,
+    "tier": "1階魔法",
+    "description": "提升自身攻擊，且攻擊敵人不受閃避（持續3輪）",
+    "buff": "藥劑師岡布奧，賢者岡布奧，考古家岡布奧，魔法學徒"
+  },
+  {
+    "id": 4042,
+    "type": "light",
+    "name": "聖光彈",
+    "consumeMp": 9,
+    "tier": "2階魔法",
+    "description": "對單個敵人造成傷害（對亡靈系敵人效果提升100%）",
+    "buff": "阿波羅岡布奧，光明仲裁官，祭司，光系大師，教皇"
+  },
+  {
+    "id": 4043,
+    "type": "light",
+    "name": "神恩術",
+    "consumeMp": 11,
+    "tier": "3階魔法",
+    "description": "恢復生命值，且清除詛咒狀態",
+    "buff": "神聖巨龍岡布奧，神龍岡布奧，光輝聖騎士，光輝神官"
+  },
+  {
+    "id": 4044,
+    "type": "light",
+    "name": "天堂之拳",
+    "consumeMp": 13,
+    "tier": "4階魔法",
+    "description": "對距離2範圍內所有敵人造成傷害（對亡靈系敵人效果提升100%）",
+    "buff": "聖域鬥士岡布奧，教皇"
+  },
+  {
+    "id": 4045,
+    "type": "light",
+    "name": "神聖重生",
+    "consumeMp": 15,
+    "tier": "5階魔法",
+    "description": "施放後，下次死亡將自動復活（復活時，恢復大量生命值）",
+    "buff": "創世神岡布奧，光輝神官"
+  },
+  {
+    "id": 4021,
+    "type": "fire",
+    "name": "火球術",
+    "consumeMp": 6,
+    "tier": "1階魔法",
+    "description": "對單個敵人造成傷害",
+    "buff": "鍊金師岡布奧，地獄火岡布奧，黑袍法師，火系大師，毀滅法師"
+  },
+  {
+    "id": 4022,
+    "type": "fire",
+    "name": "失明術",
+    "consumeMp": 9,
+    "tier": "2階魔法",
+    "description": "降低敵人命中，且不看守周圍石板（持續4輪，BOSS效果減半）",
+    "buff": "男巫岡布奧"
+  },
+  {
+    "id": 4023,
+    "type": "fire",
+    "name": "流星雨",
+    "consumeMp": 11,
+    "tier": "3階魔法",
+    "description": "召喚5顆流星，每顆流星造成傷害",
+    "buff": "惡魔岡布奧，紅龍岡布奧，魔導士，地獄戰神"
+  },
+  {
+    "id": 4024,
+    "type": "fire",
+    "name": "毀滅之刃",
+    "consumeMp": 13,
+    "tier": "4階魔法",
+    "description": "提升自身攻擊，且攻擊敵人不受反擊（持續5輪）",
+    "buff": "破壞神岡布奧，毀滅公爵"
+  },
+  {
+    "id": 4025,
+    "type": "fire",
+    "name": "末日審判",
+    "consumeMp": 17,
+    "tier": "5階魔法",
+    "description": "立即翻開本層所有石板，對所有敵人造成傷害，且令其燃燒（持續3輪）",
+    "buff": "世界樹岡布奧，毀滅法師"
+  },
+  {
+    "id": 4011,
+    "type": "water",
+    "name": "治療術",
+    "consumeMp": 6,
+    "tier": "1階魔法",
+    "description": "恢復生命值（效果與魔力相關）",
+    "buff": "牧師岡布奧，白袍法師"
+  },
+  {
+    "id": 4012,
+    "type": "water",
+    "name": "寒冰護盾",
+    "consumeMp": 9,
+    "tier": "2階魔法",
+    "description": "護盾可吸收一定傷害（持續本層）",
+    "buff": "巫妖王岡布奧，神官，大主教"
+  },
+  {
+    "id": 4013,
+    "type": "water",
+    "name": "冰錐術",
+    "consumeMp": 11,
+    "tier": "3階魔法",
+    "description": "對單個敵人造成傷害，且令其無法行動（持續2輪，BOSS持續1輪）",
+    "buff": "幽靈船長岡布奧，水系大師"
+  },
+  {
+    "id": 4014,
+    "type": "water",
+    "name": "痊癒術",
+    "consumeMp": 13,
+    "tier": "4階魔法",
+    "description": "恢復大量生命值，且清除所有負面狀態",
+    "buff": "光輝神官"
+  },
+  {
+    "id": 4015,
+    "type": "water",
+    "name": "極光屏障",
+    "consumeMp": 15,
+    "tier": "5階魔法",
+    "description": "屏障可吸收大量傷害（持續本層）",
+    "buff": "大主教"
+  },
+  {
+    "id": 4031,
+    "type": "air",
+    "name": "閃電術",
+    "consumeMp": 6,
+    "tier": "1階魔法",
+    "description": "對單個敵人造成傷害",
+    "buff": "魔法師岡布奧，神燈岡布奧，矮人王岡布奧，氣系大師，時光領主"
+  },
+  {
+    "id": 4032,
+    "type": "air",
+    "name": "靜電場",
+    "consumeMp": 9,
+    "tier": "2階魔法",
+    "description": "提升自身魔力（持續4輪）",
+    "buff": "奧丁神岡布奧，傳奇法師，時光領主"
+  },
+  {
+    "id": 4033,
+    "type": "air",
+    "name": "瓦解射線",
+    "consumeMp": 11,
+    "tier": "3階魔法",
+    "description": "敵人所受傷害增加（持續4輪，BOSS效果減半）",
+    "buff": "生化岡布奧，時光領主"
+  },
+  {
+    "id": 4034,
+    "type": "air",
+    "name": "閃電鏈",
+    "consumeMp": 13,
+    "tier": "4階魔法",
+    "description": "對單個敵人造成傷害且將傷害（逐個減半）濺射到其它敵人",
+    "buff": "聖堂武士岡布奧，時光領主"
+  },
+  {
+    "id": 4035,
+    "type": "air",
+    "name": "時間停止",
+    "consumeMp": 16,
+    "tier": "5階魔法",
+    "description": "令所有敵人停止行動，且攻擊敵人不受反擊（持續8輪，BOSS持續3輪）",
+    "buff": "奧丁神岡布奧，時之術士岡布奧，傳奇法師"
+  },
+  {
     "id": 4051,
     "type": "dark",
     "name": "詛咒術",
-    "consumeMp": "x6",
+    "consumeMp": 6,
     "tier": "1階魔法",
     "description": "降低敵人攻擊（持續4輪，BOSS效果減半）",
     "buff": "巫醫岡布奧"
@@ -12,7 +237,7 @@
     "id": 4052,
     "type": "dark",
     "name": "死亡波紋",
-    "consumeMp": "x9",
+    "consumeMp": 9,
     "tier": "2階魔法",
     "description": "對本層所有已顯形的敵人造成傷害（對亡靈系敵人無效）",
     "buff": "墮天使岡布奧，黑暗龍岡布奧，世界樹岡布奧，黑暗仲裁官，咒術師，暗系大師，黑暗祭司"
@@ -21,7 +246,7 @@
     "id": 4053,
     "type": "dark",
     "name": "吸能術",
-    "consumeMp": "x11",
+    "consumeMp": 11,
     "tier": "3階魔法",
     "description": "攻擊附帶吸血效果（持續3輪，對無生命敵人無效）",
     "buff": "吸血伯爵岡布奧"
@@ -30,7 +255,7 @@
     "id": 4054,
     "type": "dark",
     "name": "變形術",
-    "consumeMp": "x13",
+    "consumeMp": 13,
     "tier": "4階魔法",
     "description": "降低敵人攻擊及生命值，並消除一切特性（持續4輪，BOSS持續2輪）",
     "buff": "海怪船長岡布奧"
@@ -39,7 +264,7 @@
     "id": 4055,
     "type": "dark",
     "name": "內爆術",
-    "consumeMp": "x17",
+    "consumeMp": 17,
     "tier": "5階魔法",
     "description": "對單體目標造成大量傷害（最強單體傷害）",
     "buff": "黑暗龍岡布奧，黑暗祭司"

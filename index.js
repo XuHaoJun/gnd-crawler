@@ -118,7 +118,6 @@ function getSlimes() {
       let _fullstatAirshipStart = _fullstatRow.search(/【飛艇】/)
       fullstat['dungeon'] = _fullstatRow.substring(0, _fullstatAirshipStart)
       fullstat['airship'] = _fullstatRow.substring(_fullstatAirshipStart)
-      // console.log(_dataRows)
       slime = {
         id,
         name,
@@ -133,7 +132,6 @@ function getSlimes() {
         fullstat
       }
       return slime
-      // console.log(JSON.stringify(slime, null, 2))
     }).catch(error => {
       console.log('!!!!!!!!!!!!!!', id, error)
     }))
@@ -145,7 +143,6 @@ function getSlimes() {
     }
     queue.add(getSlimeTask.bind(null, i))
   }
-  // queue.add(getSlimeTask.bind(null, 54)) queue.add(getSlimeTask.bind(null, 80))
   return (queue.start().then(result => {
     fs.writeFileSync('./data/slimes.json', JSON.stringify(result, null, 2))
   }))
@@ -195,10 +192,6 @@ function getPotions() {
     }).then(opencc.simplifiedToTraditional).then(body => {
       return cheerio.load(body)
     }).then($ => {
-      // #table2 > tbody > tr:nth-child(1) > td:nth-child(2) > table > tbody >
-      // tr:nth-child(1) > td:nth-child(1) > span:nth-child(2)
-      // console.log($('#table2').text()) console.log($('#table2>tbody').text())
-      // console.log($('table').find('td').html())
       let _dataRows = $('#table2')
         .text()
         .replace(/[\s\t\r]+岡布奧/g, '岡布奧')
@@ -226,13 +219,14 @@ function getPotions() {
         const uri = prefixImageURL + id + '.png'
         const filepath = './data/image/potions/' + id + '.png'
         rq.head(uri, (err, res, body) => {
-          if (err) {
-          }
+          if (err) {}
           rq(uri)
-          .pipe(fs.createWriteStream(filepath))
-          .on('close', ()=>{});
+            .pipe(fs.createWriteStream(filepath))
+            .on('close', () => {});
         })
-        let potion = {id}
+        let potion = {
+          id
+        }
         let name = _dataRows[index * 3]
         let tier = _dataRows[index * 3 + 1]
         let effect = _dataRows[index * 3 + 2]
@@ -247,9 +241,11 @@ function getPotions() {
   queue.add(getPotionsByTier.bind(null, 2))
   queue.add(getPotionsByTier.bind(null, 3))
   queue.add(getPotionsByTier.bind(null, 4))
-  queue.start().then(()=> {
-    fs.writeFileSync('./data/potions.json', JSON.stringify(potions, null, 2))
-  })
+  queue
+    .start()
+    .then(() => {
+      fs.writeFileSync('./data/potions.json', JSON.stringify(potions, null, 2))
+    })
 }
 
 function getSpells() {
@@ -257,23 +253,22 @@ function getSpells() {
   let spells = []
   function getSpellsByType(type) {
     let uri = prefixURL + '/spells/sp_' + type + '.htm'
-    spells = []
     return (request({
       uri: uri,
       encoding: null,
       transform: body => {
         return encoding
-        .convert(body, 'UTF-8', 'GB18030')
-        .toString()
+          .convert(body, 'UTF-8', 'GB18030')
+          .toString()
       }
     }).then(opencc.simplifiedToTraditional).then(body => {
       return cheerio.load(body)
     }).then($ => {
       let _dataRows = $('#table2')
-      .text()
-      .replace(/^\s*[\t\r]/gm, "\n")
-      .replace(/[\t\r]/gm, '')
-      .split('\n')
+        .text()
+        .replace(/^\s*[\t\r]/gm, "\n")
+        .replace(/[\t\r]/gm, '')
+        .split('\n')
       let _imgDataRows = $('#table2').find('img')
       let imgPaths = []
       _imgDataRows.each((index, elem) => {
@@ -286,18 +281,30 @@ function getSpells() {
         if (match) {
           let id = parseInt(match[1])
           ids.push(id)
+          const rq = require('request')
+          const prefixImageURL = 'http://rs.qcplay.com/html/slime-datum/images/spell/'
+          const uri = prefixImageURL + id + '.png'
+          const filepath = './data/image/spells/' + id + '.png'
+          rq.head(uri, (err, res, body) => {
+            if (err) {}
+            rq(uri)
+              .pipe(fs.createWriteStream(filepath))
+              .on('close', () => {});
+          })
         }
       })
       _dataRows = _.drop(_dataRows)
       _dataRows = _.dropRight(_dataRows)
       _.each(ids, (id, index) => {
-        let spell = {id, type}
-        let name = _dataRows[index*5]
-        let consumeMp = _dataRows[index*5+1]
-        let tier = _dataRows[index*5+2]
-        let description = _dataRows[index*5+3]
-        let buff = _dataRows[index*5+4]
-        // let name = _dataRows[index*5]
+        let spell = {
+          id,
+          type
+        }
+        let name = _dataRows[index * 5]
+        let consumeMp = parseInt(_dataRows[index * 5 + 1].substring(1))
+        let tier = _dataRows[index * 5 + 2]
+        let description = _dataRows[index * 5 + 3]
+        let buff = _dataRows[index * 5 + 4]
         spell['name'] = name.substring(4)
         spell['consumeMp'] = consumeMp
         spell['tier'] = tier.substring(4)
@@ -305,16 +312,17 @@ function getSpells() {
         spell['buff'] = buff.substring(4)
         spells.push(spell)
       })
-      // console.log(_dataRows.slice([ids.length*5]))
       console.log(spells)
     }))
   }
   _.each(path.spells, (v, type) => {
     queue.add(getSpellsByType.bind(null, type))
   })
-  queue.start().then(()=> {
-    fs.writeFileSync('./data/spells.json', JSON.stringify(spells, null, 2))
-  })
+  queue
+    .start()
+    .then(() => {
+      fs.writeFileSync('./data/spells.json', JSON.stringify(spells, null, 2))
+    })
 }
 
 // getSlimes().then(() => {   return getSlimesImage() }) getSlimesImage()
