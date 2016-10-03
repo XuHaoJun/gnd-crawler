@@ -1,12 +1,13 @@
-const request = require('request-promise');
-const encoding = require('encoding');
-const cheerio = require('cheerio');
-const fs = require('fs');
-const opencc = require('node-opencc');
+const _ = require('lodash')
+const request = require('request-promise')
+const encoding = require('encoding')
+const cheerio = require('cheerio')
+const fs = require('fs')
+const opencc = require('node-opencc')
 const BlueBirdQueue = require('bluebird-queue')
-const Promise = require('bluebird');
+const Promise = require('bluebird')
 
-const prefixURL = 'http://rs.qcplay.com/html/slime-datum/cn';
+const prefixURL = 'http://rs.qcplay.com/html/slime-datum/cn'
 const path = {
   root: '/index_cn.htm',
   camps: {
@@ -20,7 +21,23 @@ const path = {
     mel: '/title/mel.htm',
     mag: '/title/mag.htm'
   },
-  slimelist: '/slimelist'
+  slimelist: '/slimelist',
+  spells: {
+    earth: '/spells/sp_earth.htm',
+    fire: '/spells/sp_fire.htm',
+    light: '/spells/sp_light.htm',
+    water: '/spells/sp_water.htm',
+    air: '/spells/sp_air.htm',
+    dark: '/spells/sp_dark.htm',
+    special: '/spells/sp_special.htm'
+  },
+  potions: {
+    1: '/potion/potion_1.htm',
+    2: '/potion/potion_2.htm',
+    3: '/potion/potion_3.htm',
+    4: '/potion/potion_4.htm'
+  },
+  stealList: '/steal_list.htm'
 }
 
 function getSlimes() {
@@ -121,7 +138,6 @@ function getSlimes() {
       console.log('!!!!!!!!!!!!!!', id, error)
     }))
   }
-
   let i;
   for (i = 1; i <= 90; i++) {
     if (i == 84 || i == 85 || i == 86) {
@@ -139,15 +155,15 @@ function getSlimesImage() {
   const prefixImageURL = "http://rs.qcplay.com/html/slime-datum/images/hero/"
   let queue = new BlueBirdQueue({concurrency: 3, delay: 100})
   function getSlimeImageTask(id) {
-    const rp = require('request')
+    const rq = require('request')
     const uri = prefixImageURL + id + '.png'
     const filepath = './data/image/slimes/' + id + '.png'
     return new Promise((resolve, reject) => {
-      rp.head(uri, (err, res, body) => {
+      rq.head(uri, (err, res, body) => {
         if (err) {
           reject(err)
         }
-        rp(uri)
+        rq(uri)
           .pipe(fs.createWriteStream(filepath))
           .on('close', resolve);
       })
@@ -163,5 +179,78 @@ function getSlimesImage() {
   return queue.start()
 }
 
-// getSlimes().then(() => {   return getSlimesImage() })
-getSlimesImage()
+function getPotions() {
+  let queue = new BlueBirdQueue({concurrency: 3, delay: 100})
+  let potions = []
+  function getPotionsByTier(tier) {
+    let uri = prefixURL + '/potion/potion_' + tier + '.htm'
+    return (request({
+      uri: uri,
+      encoding: null,
+      transform: body => {
+        return encoding
+          .convert(body, 'UTF-8', 'GB18030')
+          .toString()
+      }
+    }).then(opencc.simplifiedToTraditional).then(body => {
+      return cheerio.load(body)
+    }).then($ => {
+      // #table2 > tbody > tr:nth-child(1) > td:nth-child(2) > table > tbody >
+      // tr:nth-child(1) > td:nth-child(1) > span:nth-child(2)
+      // console.log($('#table2').text()) console.log($('#table2>tbody').text())
+      // console.log($('table').find('td').html())
+      let _dataRows = $('#table2')
+        .text()
+        .replace(/[\s\t\r]+岡布奧/g, '岡布奧')
+        .replace(/（[\s\t\r]+/g, '（')
+        .replace(/^\s*[\t\r]/gm, "\n")
+        .replace(/[\t\r]/gm, '')
+        .split('\n')
+      let _imgDataRows = $('#table2').find('img')
+      let imgPaths = []
+      _imgDataRows.each((index, elem) => {
+        imgPaths.push($(elem).attr('src'))
+      })
+      let ids = []
+      let idRegexp = /..\/..\/images\/potion\/(\d+)\.png/
+      _.each(imgPaths, (p, i) => {
+        let match = idRegexp.exec(p)
+        let id = parseInt(match[1])
+        ids.push(id)
+      })
+      _dataRows = _.drop(_dataRows)
+      _dataRows = _.dropRight(_dataRows)
+      _.each(ids, (id, index) => {
+        const rq = require('request')
+        const prefixImageURL = 'http://rs.qcplay.com/html/slime-datum/images/potion/'
+        const uri = prefixImageURL + id + '.png'
+        const filepath = './data/image/potions/' + id + '.png'
+        rq.head(uri, (err, res, body) => {
+          if (err) {
+          }
+          rq(uri)
+          .pipe(fs.createWriteStream(filepath))
+          .on('close', ()=>{});
+        })
+        let potion = {id}
+        let name = _dataRows[index * 3]
+        let tier = _dataRows[index * 3 + 1]
+        let effect = _dataRows[index * 3 + 2]
+        potion['name'] = name.substring(4)
+        potion['tier'] = tier.substring(4)
+        potion['effect'] = effect.substring(4)
+        potions.push(potion)
+      })
+    }))
+  }
+  queue.add(getPotionsByTier(1))
+  queue.add(getPotionsByTier(2))
+  queue.add(getPotionsByTier(3))
+  queue.add(getPotionsByTier(4))
+  queue.start().then(()=> {
+    fs.writeFileSync('./data/potions.json', JSON.stringify(potions, null, 2))
+  })
+}
+
+// getSlimes().then(() => {   return getSlimesImage() }) getSlimesImage()
+// getPotions()
