@@ -15,34 +15,34 @@
     "consumeMp": 9,
     "tier": "2階魔法",
     "description": "立即翻開若干個石板",
-    "buff": "地刺術"
+    "buff": "重裝卡車岡布奧"
   },
   {
     "id": 4003,
     "type": "earth",
-    "name": "",
-    "consumeMp": null,
-    "tier": "對同列所有敵人造成傷害，且翻開整列石板",
-    "description": "美杜莎岡布奧，鎮龍騎士",
-    "buff": "超重力"
+    "name": "地刺術",
+    "consumeMp": 11,
+    "tier": "3階魔法",
+    "description": "對同列所有敵人造成傷害，且翻開整列石板",
+    "buff": "美杜莎岡布奧，鎮龍騎士"
   },
   {
     "id": 4004,
     "type": "earth",
-    "name": "",
-    "consumeMp": null,
-    "tier": "對單體目標造成傷害，且令其無法反擊（持續3輪，BOSS持續1輪）",
-    "description": "海格力斯岡布奧，土系大師",
-    "buff": "大地之門"
+    "name": "超重力",
+    "consumeMp": 13,
+    "tier": "4階魔法",
+    "description": "對單體目標造成傷害，且令其無法反擊（持續3輪，BOSS持續1輪）",
+    "buff": "海格力斯岡布奧，土系大師"
   },
   {
     "id": 4005,
     "type": "earth",
-    "name": "",
-    "consumeMp": null,
-    "tier": "立即回退若干層迷宮（特殊層禁用）",
-    "description": "位面先知",
-    "buff": ""
+    "name": "大地之門",
+    "consumeMp": 17,
+    "tier": "5階魔法",
+    "description": "立即回退若干層迷宮（特殊層禁用）",
+    "buff": "位面先知"
   },
   {
     "id": 4011,

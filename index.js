@@ -275,6 +275,13 @@ function getSpells() {
         .replace(/^\s*[\t\r]/gm, "\n")
         .replace(/[\t\r]/gm, '')
         .split('\n')
+      let i = 0
+      for (i = 0; i < _dataRows.length; i++) {
+        if (_dataRows[i] == '【名稱】地震術') {
+          _dataRows.splice(i + 4, 0, '【強化】重裝卡車岡布奧')
+          break
+        }
+      }
       let _imgDataRows = $('#table2').find('img')
       let imgPaths = []
       _imgDataRows.each((index, elem) => {
@@ -330,7 +337,195 @@ function getSpells() {
       spells.sort((a, b) => {
         return a.id - b.id
       })
-      return fs.writeFileAsync('./data/spells.json', JSON.stringify(spells, null, 2))
+      const outputPath = './data/spells.json'
+      return fs.writeFileAsync(outputPath, JSON.stringify(spells, null, 2))
+    })
+}
+
+function getTitles() {
+  let queue = new BlueBirdQueue({concurrency: 3, delay: 100})
+  let titles = []
+  function getTitlesByName(name) {
+    let uri = prefixURL + '/title/' + name + '.htm'
+    return (request({
+      uri: uri,
+      encoding: null,
+      transform: body => {
+        return encoding
+          .convert(body, 'UTF-8', 'GB18030')
+          .toString()
+      }
+    }).then(opencc.simplifiedToTraditional).then(body => {
+      return cheerio.load(body)
+    }).then($ => {
+      let _dataRows = $('script')
+        .text()
+        .replace(/[\t\r]+/gm, '')
+        .split('\n')
+      _tmpDataRows = _dataRows
+      _dataRows = []
+      const rowRegexp = /^Array/
+      const joinRegexp = /^"<br/
+      _.each(_tmpDataRows, (row, i) => {
+        if (rowRegexp.test(row)) {
+          if (i + 1 < _tmpDataRows.length) {
+            let nextRow = _tmpDataRows[i + 1]
+            if (joinRegexp.test(nextRow)) {
+              row = row + nextRow
+            }
+          }
+          _dataRows.push(row)
+        }
+      })
+      _.each(_dataRows, (row, i) => {})
+      // {name: '尋寶者', buffs: ['每層偵測3/4/5個敵人的初始位置', '攻擊+1/2/3']}
+      console.log(_dataRows)
+    }))
+  }
+  getTitlesByName('ven')
+}
+
+function getArtifacts() {
+  let queue = new BlueBirdQueue({concurrency: 3, delay: 100})
+  let artifacts = []
+  function getArtifactsByType(type) {
+    let uri = prefixURL + '/artifact/art_' + type + '.htm'
+    return (request({
+      uri: uri,
+      encoding: null,
+      transform: body => {
+        return encoding
+          .convert(body, 'UTF-8', 'GB18030')
+          .toString()
+      }
+    }).then(opencc.simplifiedToTraditional).then(body => {
+      return cheerio.load(body)
+    }).then($ => {
+      let _dataRows = $('table')
+        .text()
+        .replace(/[\t\r]+/gm, '')
+        .replace(/^\s*[\r\n]/gm, '')
+        .replace(/基礎屬性：[\s\t\r]/gm, '基礎屬性：')
+        .split('\n')
+      _dataRows = _dataRows.slice(2, -6)
+      let _imgDataRows = $('span>img')
+      let imgPaths = []
+      _imgDataRows.each((index, elem) => {
+        const imgPath = $(elem).attr('src')
+        imgPaths.push(imgPath)
+      })
+      let ids = []
+      let idRegexp = /..\/..\/images\/artifact\/(\d+)\.png/
+      _.each(imgPaths, (p, i) => {
+        let match = idRegexp.exec(p)
+        if (match) {
+          let id = parseInt(match[1])
+          ids.push(id)
+        }
+      })
+      _.each(ids, (id, index) => {
+        let artifact = {
+          id
+        }
+        let name = _dataRows[index * 16]
+        let sclass = _dataRows[index * 16 + 1]
+        let eqType = _dataRows[index * 16 + 2]
+        let initAttr = _dataRows[index * 16 + 3]
+        let enhance = {}
+        enhance[1] = _dataRows[index * 16 + 5]
+        enhance[2] = _dataRows[index * 16 + 7]
+        enhance[3] = _dataRows[index * 16 + 9]
+        enhance[4] = _dataRows[index * 16 + 11]
+        enhance[5] = _dataRows[index * 16 + 13]
+        enhance[6] = _dataRows[index * 16 + 15]
+        artifact['name'] = name.substring(4)
+        artifact['sclass'] = sclass.substr(4)
+        artifact['eqType'] = eqType.substr(4)
+        artifact['initAttr'] = initAttr.substr(5)
+        artifact['enhance'] = enhance
+        console.log(id, artifact['name'])
+        artifacts.push(artifact)
+      })
+      function getArtifactImages(_ids) {
+        _.each(_ids, (id) => {
+          const rq = require('request')
+          const prefixImageURL = 'http://rs.qcplay.com/html/slime-datum/images/artifact/'
+          const uri = prefixImageURL + id + '.png'
+          const filepath = './data/image/artifacts/' + id + '.png'
+          rq.head(uri, (err, res, body) => {
+            if (err) {
+              console.log(err)
+              return
+            }
+            rq(uri)
+              .pipe(fs.createWriteStream(filepath))
+              .on('close', () => {});
+          })
+        })
+      }
+      getArtifactImages(ids)
+      // console.log(JSON.stringify(_dataRows, null, 2))
+    }))
+  }
+  _.each([
+    'ven', 'mel', 'mag'
+  ], (type) => {
+    queue.add(getArtifactsByType.bind(null, type))
+  })
+  return queue
+    .start()
+    .then(() => {
+      artifacts.sort((a, b) => {
+        return a.id - b.id
+      })
+      return fs.writeFileAsync('./data/artifacts.json', JSON.stringify(artifacts, null, 2))
+    })
+}
+
+function getIconImages() {
+  const starImageURL = 'http://rs.qcplay.com/html/slime-datum/images/icon/star.png'
+  const mpImageURL = 'http://rs.qcplay.com/html/slime-datum/images/icon/mp.png'
+  function _getIconImages(filepath, uri) {
+    const rq = require('request')
+    return new Promise((resolve, reject) => {
+      rq.head(uri, (err, res, body) => {
+        if (err) {
+          reject(err)
+        }
+        rq(uri)
+          .pipe(fs.createWriteStream(filepath))
+          .on('close', resolve)
+      })
+    })
+  }
+  let ps = [
+    _getIconImages('./data/image/icons/star.png', starImageURL),
+    _getIconImages('./data/image/icons/mp.png', mpImageURL)
+  ]
+  return Promise.all(ps)
+}
+
+function createDirs() {
+  return fs
+    .mkdirAsync('./data')
+    .then(() => {
+      return fs.mkdirAsync('./data/image')
+    })
+    .then(() => {
+      return Promise.all([
+        fs.mkdirAsync('./data/image/icons'),
+        fs.mkdirAsync('./data/image/spells'),
+        fs.mkdirAsync('./data/image/slimes'),
+        fs.mkdirAsync('./data/image/potions'),
+        fs.mkdirAsync('./data/image/artifacts')
+      ])
+    })
+    .catch(err => {
+      if (err.code == 'EEXIST') {
+        return
+      } else {
+        return Promise.reject(err)
+      }
     })
 }
 
@@ -339,7 +534,13 @@ function getAll() {
     .then(getSlimesImage)
     .then(getPotions)
     .then(getSpells)
+    .then(getArtifacts)
+    .then(getIconImages)
 }
 
-// getSpells()
-getAll()
+function init() {
+  // createDirs()
+  getArtifacts()
+}
+
+init()
