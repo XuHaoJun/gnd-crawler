@@ -86,6 +86,8 @@ function getSlimes() {
           return 'luk'
         } else if (str == '裝甲') {
           return 'def'
+        } else if (str == '機動') {
+          return 'spd'
         }
         return ''
       }
@@ -529,6 +531,30 @@ function createDirs() {
     })
 }
 
+function getStealList() {
+  const uri = 'http://rs.qcplay.com/html/slime-datum/cn/steal_list.htm'
+  return request({
+    uri: uri,
+    encoding: null,
+    transform: body => {
+      return encoding
+        .convert(body, 'UTF-8', 'GB18030')
+        .toString()
+    }
+  })
+    .then(opencc.simplifiedToTraditional)
+    .then(body => {
+      return cheerio.load(body)
+    })
+    .then($ => {
+      let _dataRows = $('tr').length
+      $('tr').each((index, elem) =>{
+        console.log($(elem).text())
+      })
+      console.log(JSON.stringify(_dataRows, null, 2))
+    })
+}
+
 function getAll() {
   return getSlimes()
     .then(getSlimesImage)
@@ -539,8 +565,8 @@ function getAll() {
 }
 
 function init() {
-  // createDirs()
-  getArtifacts()
+  createDirs().then(getAll)
+  // getStealList()
 }
 
 init()
